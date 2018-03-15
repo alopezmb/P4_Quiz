@@ -3,9 +3,19 @@
   "version": "1.0.0",
   "description": "proyecto quiz",
   "main": "main.js",
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "figlet": "^1.2.0",
+    "sequelize": "^4.36.0",
+    "sqlite3": "^3.1.13"
+  },
   "scripts": {
     "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alopezmb/P3_Quiz.git"
   },
   "keywords": [
     "quiz",
@@ -14,8 +24,8 @@
   ],
   "author": "alejandro lopez",
   "license": "Unlicense",
-  "dependencies": {
-    "chalk": "^2.3.2",
-    "figlet": "^1.2.0"
-  }
+  "bugs": {
+    "url": "https://github.com/alopezmb/P3_Quiz/issues"
+  },
+  "homepage": "https://github.com/alopezmb/P3_Quiz#readme"
 }
