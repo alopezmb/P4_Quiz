@@ -106,6 +106,7 @@ const validateId = id => {
 
 
 const test_quiz =(rl,id) =>{
+    /*
    //validar id, si es correcto, acceder a la BD extraer el quiz con ese id y preguntar
     if (typeof id === "undefined") {
         errorlog(`Falta el parámetro id.`);
@@ -127,10 +128,12 @@ const test_quiz =(rl,id) =>{
             rl.prompt();
         }
     }
+
+    */
 };
 
 const play_quiz=rl => {
-
+/*
     //inicializo puntuaciones y array con ids
     let score = 0;
     let unResolved = [];
@@ -178,6 +181,7 @@ const play_quiz=rl => {
         rl.prompt();
     }
 
+*/
 
 };
 
