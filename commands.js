@@ -163,13 +163,18 @@ const play_quiz = rl => {
                                         log("tamaño array =" + remaining.length);
                                         log(`${colorize("CORRECTO.", "green")} Llevas ` + score + ` aciertos`);
 
+
                                         if (remaining.length === 0) {
                                             log("Acertaste todas las preguntas, enhorabuena!");
                                             log(`${colorize("Aciertos:", "green")} ${colorize(score, "magenta")}`);
 
                                         }
                                          else{
-                                            resolve(playRandomQ(remaining));
+                                            setTimeout(() =>
+                                                resolve(playRandomQ(remaining) ), 1000);
+
+
+
                                         }
 
 
@@ -178,7 +183,6 @@ const play_quiz = rl => {
                                         log("INCORRECTO", "red");
                                         log("Has perdido. Fin del juego.");
                                         log("Aciertos: " + score);
-
                                     }
                                 })
                                 .catch(error => {
