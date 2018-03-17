@@ -139,14 +139,13 @@ const play_quiz = rl => {
     const playRandomQ = (remaining) => {
 
             let index = Math.round(Math.random() * remaining.length);
-            log("Primer intento: " + index);
 
             while (index < 0 || index >= remaining.length) {             // intento generar un indice válido
                 index = Math.round(Math.random() * remaining.length);
-                log("sucesivos:" + index);
+
             }
             idq = remaining[index];
-            log("Index chosen = " + index + "ID = " + idq);
+
             validateId(idq)  // para poner un then necesito una promesa a la que ponerle el then
                 .then(idq => models.quiz.findById(idq))
                 .then(quiz => {
@@ -158,7 +157,6 @@ const play_quiz = rl => {
                             if (quiz.answer.toLowerCase().trim() === a.toLowerCase().trim()) {
                                 score++;
                                 remaining.splice(index, 1);
-                                log("tamaño array =" + remaining.length);
                                 log(`${colorize("CORRECTO.", "green")} Llevas ` + score + ` aciertos`);
 
 
@@ -168,8 +166,7 @@ const play_quiz = rl => {
 
                                 }
                                 else {
-                                    setTimeout(() =>
-                                       playRandomQ(remaining), 1000);
+                                       playRandomQ(remaining);
 
 
                                 }
