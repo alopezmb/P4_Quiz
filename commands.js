@@ -161,8 +161,8 @@ const play_quiz = rl => {
 
 
                                 if (remaining.length === 0) {
-                                    log("Acertaste todas las preguntas, enhorabuena!");
-                                    log(`${colorize("Aciertos:", "green")} ${colorize(score, "magenta")}`);
+                                    log(`${colorize("ENHORABUENA! HAS GANADO!!", "green")} Aciertos totales :${colorize(score, "magenta")}`);
+
 
                                 }
                                 else {
@@ -173,9 +173,8 @@ const play_quiz = rl => {
 
 
                             } else {
-                                log("INCORRECTO", "red");
-                                log("Has perdido. Fin del juego.");
-                                log("Aciertos: " + score);
+                                log(`${colorize("INCORRECTO, ","red")}.Fin del juego. Aciertos:`+score);;
+
                             }
                         })
                         .catch(error => {
