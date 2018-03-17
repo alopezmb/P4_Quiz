@@ -132,89 +132,77 @@ const play_quiz = rl => {
 
     //Preparando variables globales al metodo entero
     let score = 0;
-    let remainingarr = [];
-
-        //Funcion promesa llamada de forma recursiva
-        const playRandomQ = (remaining) => {
-           return new Sequelize.Promise((resolve, reject) => {
+    let remainingarr=[];
 
 
+    //Funcion promesa llamada de forma recursiva
+    const playRandomQ = (remaining) => {
 
-                    let index = Math.round(Math.random() * remaining.length);
-                    log("Primer intento: "+index);
+            let index = Math.round(Math.random() * remaining.length);
+            log("Primer intento: " + index);
 
-                    while (index < 0 || index >= remaining.length) {             // intento generar un indice válido
-                        index = Math.round(Math.random() * remaining.length);
-                        log("sucesivos:" + index);
+            while (index < 0 || index >= remaining.length) {             // intento generar un indice válido
+                index = Math.round(Math.random() * remaining.length);
+                log("sucesivos:" + index);
+            }
+            idq = remaining[index];
+            log("Index chosen = " + index + "ID = " + idq);
+            validateId(idq)  // para poner un then necesito una promesa a la que ponerle el then
+                .then(idq => models.quiz.findById(idq))
+                .then(quiz => {
+                    if (!quiz) {
+                        throw new Error("PROBLEMAS");
                     }
-                    idq = remaining[index];
-                    log("Index chosen = "+index+"ID = "+idq);
-                        validateId(idq)  // para poner un then necesito una promesa a la que ponerle el then
-                        .then(idq => models.quiz.findById(idq))
-                        .then(quiz => {
-                            if (!quiz) {
-                                throw new Error("PROBLEMAS");
+                    return makeQuestion(rl, quiz.question + " ", "magenta")
+                        .then(a => {
+                            if (quiz.answer.toLowerCase().trim() === a.toLowerCase().trim()) {
+                                score++;
+                                remaining.splice(index, 1);
+                                log("tamaño array =" + remaining.length);
+                                log(`${colorize("CORRECTO.", "green")} Llevas ` + score + ` aciertos`);
+
+
+                                if (remaining.length === 0) {
+                                    log("Acertaste todas las preguntas, enhorabuena!");
+                                    log(`${colorize("Aciertos:", "green")} ${colorize(score, "magenta")}`);
+
+                                }
+                                else {
+                                    setTimeout(() =>
+                                       playRandomQ(remaining), 1000);
+
+
+                                }
+
+
+                            } else {
+                                log("INCORRECTO", "red");
+                                log("Has perdido. Fin del juego.");
+                                log("Aciertos: " + score);
                             }
-                            return makeQuestion(rl, quiz.question + " ", "magenta")
-                                .then(a => {
-                                    if (quiz.answer.toLowerCase().trim() === a.toLowerCase().trim()) {
-                                        score++;
-                                        remaining.splice(index, 1);
-                                        log("tamaño array =" + remaining.length);
-                                        log(`${colorize("CORRECTO.", "green")} Llevas ` + score + ` aciertos`);
-
-
-                                        if (remaining.length === 0) {
-                                            log("Acertaste todas las preguntas, enhorabuena!");
-                                            log(`${colorize("Aciertos:", "green")} ${colorize(score, "magenta")}`);
-
-                                        }
-                                         else{
-                                            setTimeout(() =>
-                                                resolve(playRandomQ(remaining) ), 1000);
-
-
-
-                                        }
-
-
-
-                                    } else {
-                                        log("INCORRECTO", "red");
-                                        log("Has perdido. Fin del juego.");
-                                        log("Aciertos: " + score);
-                                    }
-                                })
-                                .catch(error => {
-                                    errorlog(error.message);
-                                })
-                                .then(() => {
-                                    rl.prompt();
-                                });
+                        })
+                        .catch(error => {
+                            errorlog(error.message);
+                        })
+                        .then(() => {
+                            rl.prompt();
                         });
-
-
                 });
 
-            };
+
+        };
 
 
 
-        //Una vez generado mi metodo auxiliar para recursividad, lo llamo y enlazo con promesas
+
+    //Una vez generado mi metodo auxiliar para recursividad, lo llamo y enlazo con promesas
 
     models.quiz.findAll().then(quizarray => {
-    for (i = 0; i < quizarray.length; i++) {
-        remainingarr[i] = quizarray[i].id;
+        for (i = 0; i < quizarray.length; i++) {
+            remainingarr[i] = quizarray[i].id;
 
-    }
-
-    playRandomQ(remainingarr)
-        .catch(error => {
-            errorlog(error.message);
-        })
-        .then(() => {
-            rl.prompt();
-        });
+        }
+        playRandomQ(remainingarr);
 
 
 
