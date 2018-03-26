@@ -9,18 +9,18 @@ const colorize =(msg,color) => {
     return msg;
 };
 
-const log =(msg,color) => {
-    console.log(colorize(msg,color));
+const log =(socket,msg,color) => {
+    socket.write(colorize(msg,color)+"\n");
 };
 
-const biglog =(msg,color) => {
+const biglog =(socket,msg,color) => {
 
-    log(figlet.textSync(msg, {horizontalLayout: 'full', verticalLayout: 'full'}),color);
+    log(socket,figlet.textSync(msg, {horizontalLayout: 'full', verticalLayout: 'full'}),color);
 };
 
-const errorlog =(errormsg) => {
+const errorlog =(socket,errormsg) => {
 
-    console.log(`${colorize("Error","red")}: ${colorize(colorize(errormsg,"red"),"bgYellowBright")}`);
+    socket.write(`${colorize("Error","red")}: ${colorize(colorize(errormsg,"red"),"bgYellowBright")}\n`);
 };
 
 
