@@ -265,7 +265,7 @@ const edit_quiz = (socket,rl, id) => {
     });
 };
 
-const credits_quiz=rl=>{
+const credits_quiz=(socket,rl)=>{
     log(socket,'Autor de la práctica:');
     log(socket,'Alejandro López Martínez','green');
     rl.prompt();
